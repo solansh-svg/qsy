@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejercicio 4</title>
+    <style>
+        .modal-overlay { display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 1000; }
+        .modal-overlay.show { display: block; }
+        .modal-box { background: #fffbe6; width: 85%; max-width: 400px; margin: 150px auto; padding: 30px; border-radius: 15px; border: 3px solid #d4a017; position: relative; text-align: center; }
+        .modal-close { position: absolute; right: 15px; top: 10px; font-size: 28px; border: none; background: none; cursor: pointer; color: #999; }
+    </style>
+</head>
+<body>
+    <nav style="background: #eee; padding: 10px; margin-bottom: 20px;">
+        <strong>Menú:</strong>
+        <a href="index.html">Ejercicio 1</a> 
+        <a href="ejercio2.html">Ejercicio 2</a>  
+        <a href="ejercio3.html">Ejercicio 3</a>  
+        <a href="ejecicio4.html">Ejercicio 4</a>
+    </nav>
+
+    <h2>🥠 El Oráculo Digital</h2>
+    <button id="openBtn">🥠 Abrir Galleta</button>
+
+    <div id="modal" class="modal-overlay">
+        <div class="modal-box">
+            <button id="closeBtn" class="modal-close">×</button>
+            <h3 id="luckTitle">Tu Destino:</h3>
+            <p id="fortuneText" style="font-style: italic;"></p>
+            <p id="luckyNumbers" style="font-weight: bold; color: #d4a017;"></p>
+        </div>
+    </div>
+
+    <script>
+        const openBtn = document.getElementById("openBtn");
+        const closeBtn = document.getElementById("closeBtn");
+        const modal = document.getElementById("modal");
+        const phrases = ["Hoy será un gran día.", "El código fluirá sin errores.", "Pronto recibirás buenas noticias."];
+
+        openBtn.addEventListener("click", () => {
+            document.getElementById("fortuneText").innerHTML = phrases[Math.floor(Math.random() * phrases.length)];
+            document.getElementById("luckyNumbers").innerHTML = "Suerte: " + Math.floor(Math.random()*99);
+            modal.classList.add("show");
+        });
+
+        closeBtn.addEventListener("click", () => modal.classList.remove("show"));
+        window.addEventListener("click", (e) => { if (e.target === modal) modal.classList.remove("show"); });
+    </script>
+</body>
+</html>

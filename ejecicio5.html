@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejercicio 5</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #fdf2e9; color: #5d4037; padding: 20px; text-align: center; }
+        .field { background: white; margin: 10px auto; width: 300px; padding: 15px; border-radius: 8px; border: 1px solid #ddd; text-align: left; }
+        input { width: 90%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; }
+        .error { color: #e53935; font-size: 13px; margin-top: 5px; font-weight: bold; }
+        .ok { color: #2e7d32; font-weight: bold; font-size: 1.2em; border: 2px solid #2e7d32; padding: 15px; display: inline-block; background: #e8f5e9; }
+        button { background: #ff7043; color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-size: 16px; }
+        button:hover { background: #f4511e; }
+        nav { background: #eee; padding: 10px; margin-bottom: 20px; border-radius: 5px; }
+        nav a { margin: 0 10px; text-decoration: none; color: #333; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <nav style="background: #eee; padding: 10px; margin-bottom: 20px;">
+        <strong>Menú:</strong>
+        <a href="index.html">Ejercicio 1</a> 
+        <a href="ejercio2.html">Ejercicio 2</a> 
+        <a href="ejercio3.html">Ejercicio 3</a> 
+        <a href="ejecicio4.html">Ejercicio 4</a>
+    </nav>
+
+    <h2>🍕 Pizzería "El Código"</h2>
+    <p>Completa tu pedido para enviarlo al horno.</p>
+
+    <form id="signupForm">
+        <div class="field">
+            <label>Nombre del Cliente:</label><br>
+            <input id="name" type="text" placeholder="Ej: Juan Pérez">
+            <p id="nameError" class="error"></p>
+        </div>
+
+        <div class="field">
+            <label>Correo para Confirmación:</label><br>
+            <input id="email" type="text" placeholder="tu@correo.com">
+            <p id="emailError" class="error"></p>
+        </div>
+
+        <div class="field">
+            <label>Código de Cupón (8 letras):</label><br>
+            <input id="password" type="password" placeholder="********">
+            <p id="passwordError" class="error"></p>
+        </div>
+
+        <div class="field">
+            <label>Repetir Cupón:</label><br>
+            <input id="confirm" type="password" placeholder="********">
+            <p id="confirmError" class="error"></p>
+        </div>
+
+        <p><button type="submit">Enviar al Horno 🔥</button></p>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        const form = document.getElementById("signupForm");
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const passInput = document.getElementById("password");
+        const confirmInput = document.getElementById("confirm");
+
+        const nameError = document.getElementById("nameError");
+        const emailError = document.getElementById("emailError");
+        const passError = document.getElementById("passwordError");
+        const confirmError = document.getElementById("confirmError");
+        const result = document.getElementById("result");
+
+        function showError(el, message) { el.innerHTML = message; }
+        function clearError(el) { el.innerHTML = ""; }
+
+        function validateName() {
+            let value = nameInput.value.trim();
+            if (value.length < 3) { showError(nameError, "El nombre es muy corto."); return false; }
+            clearError(nameError); return true;
+        }
+
+        function validateEmail() {
+            let value = emailInput.value.trim();
+            if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))) { showError(emailError, "Correo no válido."); return false; }
+            clearError(emailError); return true;
+        }
+
+        function validatePassword() {
+            let value = passInput.value;
+            if (value.length !== 8) { showError(passError, "El cupón debe tener 8 letras."); return false; }
+            clearError(passError); return true;
+        }
+
+        function validateConfirm() {
+            if (confirmInput.value !== passInput.value || confirmInput.value === "") {
+                showError(confirmError, "Los cupones no coinciden."); return false;
+            }
+            clearError(confirmError); return true;
+        }
+
+        function validateForm() {
+            return validateName() && validateEmail() && validatePassword() && validateConfirm();
+        }
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            result.innerHTML = "Verificando ingredientes...";
+
+            if (validateForm()) {
+                result.innerHTML = "✅ ¡Pedido aceptado! Tu pizza está en el horno.";
+                result.className = "ok";
+            } else {
+                result.innerHTML = "❌ Error en el pedido. Revisa los datos.";
+                result.className = "error";
+            }
+        });
+    </script>
+
+</body>
+</html>

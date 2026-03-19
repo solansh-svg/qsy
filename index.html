@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejercicio 1</title>
+</head>
+<body>
+    <nav style="background: #eee; padding: 10px; margin-bottom: 20px;">
+        <strong>Menú:</strong>
+        <a href="index.html">Ejercicio 1</a> 
+        <a href="ejercio2.html">Ejercicio 2</a> 
+        <a href="ejercio3.html">Ejercicio 3</a> 
+        <a href="ejecicio4.html">Ejercicio 4</a>
+    </nav>
+
+    <h2>⚖️ Contador de Equilibrio</h2>
+    <p id="count" style="font-size:40px;">0</p>
+    <p id="status">Pulsa + para empezar</p>
+
+    <button id="btnPlus">+</button>
+    <button id="btnMinus">-</button>
+    <button id="btnReset">Reset</button>
+    <button id="btnSave">Save</button>
+    <button id="btnLoad">Load</button>
+
+    <script>
+        document.getElementById("btnPlus").addEventListener("click", increaseCount);
+        document.getElementById("btnMinus").addEventListener("click", decreaseCount);
+        document.getElementById("btnReset").addEventListener("click", resetCount);
+        document.getElementById("btnSave").addEventListener("click", saveCount);
+        document.getElementById("btnLoad").addEventListener("click", loadCount);
+
+        let count = 0;
+        let ultimoBoton = ""; 
+
+        loadCount();
+
+        function updateCount() {
+            document.getElementById("count").innerHTML = count;
+        }
+
+        function increaseCount() {
+            if (ultimoBoton !== "plus") {
+                count++;
+                ultimoBoton = "plus";
+                document.getElementById("status").innerHTML = "¡Bien! Ahora pulsa [-]";
+                updateCount();
+            } else {
+                document.getElementById("status").innerHTML = "⚠️ No puedes sumar dos veces seguidas";
+            }
+        }
+
+        function decreaseCount() {
+            if (count > 0 && ultimoBoton !== "minus") {
+                count--;
+                ultimoBoton = "minus";
+                document.getElementById("status").innerHTML = "¡Bien! Ahora pulsa [+]";
+                updateCount();
+            } else {
+                document.getElementById("status").innerHTML = "⚠️ No puedes restar dos veces seguidas";
+            }
+        }
+
+        function resetCount() {
+            count = 0;
+            ultimoBoton = "";
+            document.getElementById("status").innerHTML = "Reiniciado. Pulsa cualquier botón.";
+            updateCount();
+        }
+
+        function saveCount() { localStorage.setItem("count", count); }
+        function loadCount() {
+            let saved = localStorage.getItem("count");
+            if (saved !== null) { count = Number(saved); }
+            updateCount();
+        }
+    </script>
+</body>
+</html>

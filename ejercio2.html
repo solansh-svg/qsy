@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ejercicio 2</title>
+</head>
+<body>
+    <nav style="background: #eee; padding: 10px; margin-bottom: 20px;">
+        <strong>Menú:</strong>
+        <a href="index.html">Ejercicio 1</a> 
+        <a href="ejercio2.html">Ejercicio 2</a> 
+        <a href="ejercio3.html">Ejercicio 3</a> 
+        <a href="ejecicio4.html">Ejercicio 4</a>
+    </nav>
+
+    <h2>🚨 Intrusión en el Sistema 🚨</h2>
+    <p id="count" style="font-size:60px;">Score: 0</p>
+    <p id="status">¡Atrapa los bits antes de que desaparezcan!</p>
+
+    <button id="btnPlus">Sifrar Datos (+)</button>
+    <button id="btnMinus">Borrar Huellas (-)</button>
+    <button id="btnReset">Formatear Disco</button>
+    <button id="btnSave">Descargar RAM</button>
+    <button id="btnLoad">Restaurar Backup</button>
+
+    <script>
+        document.getElementById("btnPlus").addEventListener("click", increaseCount);
+        document.getElementById("btnMinus").addEventListener("click", decreaseCount);
+        document.getElementById("btnReset").addEventListener("click", resetCount);
+        document.getElementById("btnSave").addEventListener("click", saveCount);
+        document.getElementById("btnLoad").addEventListener("click", loadCount);
+
+        let count = 0;
+
+        function updateCount() {
+            document.getElementById("count").innerHTML = "Score: " + count;
+            const botones = ["btnPlus", "btnMinus", "btnReset", "btnSave", "btnLoad"];
+            botones.forEach(id => {
+                let btn = document.getElementById(id);
+                btn.style.position = "absolute";
+                btn.style.left = Math.random() * 80 + "%";
+                btn.style.top = Math.random() * 80 + "%";
+            });
+            if (count > 10) {
+                document.getElementById("status").innerHTML = "¡EL FIREWALL SE ESTÁ VOLVIENDO LOCO!";
+                document.body.style.backgroundColor = "red";
+            }
+        }
+
+        function increaseCount() { count++; updateCount(); }
+        function decreaseCount() { if (count > 0) { count -= 2; updateCount(); } }
+        function resetCount() {
+            if(confirm("¿Rendirse?")) {
+                count = 0;
+                const botones = ["btnPlus", "btnMinus", "btnReset", "btnSave", "btnLoad"];
+                botones.forEach(id => { document.getElementById(id).style.position = "static"; });
+                document.body.style.backgroundColor = "white";
+                updateCount();
+            }
+        }
+        function saveCount() { localStorage.setItem("hacker_score", count); alert("Guardado."); }
+        function loadCount() {
+            let saved = localStorage.getItem("hacker_score");
+            if (saved !== null) { count = Number(saved); updateCount(); }
+        }
+        updateCount();
+    </script>
+</body>
+</html>
